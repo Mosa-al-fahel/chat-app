@@ -31,3 +31,25 @@ This project strictly follows the **Clean Architecture** pattern to separate con
 - [Shared Preferences](https://pub.dev/packages/shared_preferences) - Key-value storage for app settings (Theme, User Session).
 - [Flutter ScreenUtil](https://pub.dev/packages/flutter_screenutil) - UI responsiveness.
 - [Get It](https://pub.dev/packages/get_it) - Service locator.
+ 
+
+ ### Prerequisites
+- Flutter SDK (`>=3.0.0`)
+
+
+### Installation
+#### for frontend
+- make sure you have got this repository on your device
+- open project in vs and run these in terminal:
+- flutter clean
+- flutter pub get
+- then run this one:
+- flutter pub run build_runner build --delete-conflicting-outputs
+- this is important for haive and json_serializable to work without issues
+#### for backend which powers this app
+- make sure you have got this repo: [backend project](https://github.com/Mosa-al-fahel/chat-app-backend-node-js)
+- (with node js requirements)
+- when both project are opened
+- open cmd and run chat-app-backend-node-js
+- run the server and then run the emulator in flutter window 
+
