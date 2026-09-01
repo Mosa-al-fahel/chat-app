@@ -18,7 +18,7 @@ class RequestsList extends StatelessWidget {
         itemBuilder: (context, index) => ContactStructure(
               isFriend: false,
               userData: requestsList[index],
-              onPressed:()=> context
+              onPressed: () => context
                   .read<RequestsCubit>()
                   .acceptFriendRequest(senderId: requestsList[index].id!),
             ));
@@ -33,7 +33,7 @@ Widget loadingRequestsView() {
       });
 }
 
-Widget emptyRequestsView() {
+Widget emptyRequestsView(BuildContext context) {
   return Center(
     child: Container(
       alignment: Alignment.center,
@@ -42,11 +42,12 @@ Widget emptyRequestsView() {
       height: 300.h,
       width: double.infinity,
       decoration: BoxDecoration(
-          color: AppColors.lightestGrey,
+          color: Theme.of(context).colorScheme.outlineVariant,
           borderRadius: BorderRadius.circular(8.r)),
       child: Text(
         'You have no requests For now',
-        style: TextStyles.lighgreyFont18Medium,
+        style: TextStyles.lighgreyFont18Medium.copyWith(
+            color: Theme.of(context).colorScheme.onSecondaryContainer),
       ),
     ),
   );

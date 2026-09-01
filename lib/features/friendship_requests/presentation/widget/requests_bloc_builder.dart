@@ -15,19 +15,19 @@ class RequestsBlocBuilder extends StatelessWidget {
                   ScaleTransition(scale: animation, child: child),
               switchInCurve: Curves.easeOutExpo,
               duration: const Duration(milliseconds: 450),
-              child: _buildAnimatedSwitcher(state),
+              child: _buildAnimatedSwitcher(state, context),
             ));
   }
 }
 
-Widget _buildAnimatedSwitcher(RequestsState state) {
+Widget _buildAnimatedSwitcher(RequestsState state, BuildContext context) {
   switch (state.pageState) {
     case RequestsPageState.loading:
       return loadingRequestsView();
     case RequestsPageState.success:
       return RequestsList(requestsList: state.requestsList);
     case RequestsPageState.empty:
-      return emptyRequestsView();
+      return emptyRequestsView(context);
     case RequestsPageState.failure:
       return GlobalDialogDisplay(
         text: state.getRequestsError!.message!,

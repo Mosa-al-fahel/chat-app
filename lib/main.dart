@@ -12,7 +12,6 @@ import 'package:whishing/core/routing/routs.dart';
 import 'package:whishing/core/themes/theme.dart';
 import 'package:whishing/features/chat/data/model/message_model.dart';
 import 'package:whishing/themes_cubit/theme_cubit.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreference.initializeSharedPerefrnce();

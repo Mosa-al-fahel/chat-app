@@ -51,5 +51,5 @@ This project strictly follows the **Clean Architecture** pattern to separate con
 - (with node js requirements)
 - when both project are opened
 - open cmd and run chat-app-backend-node-js
-- run the server and then run the emulator in flutter window 
+- run the server and then run the emulator in flutter window
 
