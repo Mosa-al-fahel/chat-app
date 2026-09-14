@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whishing/core/domain/user_entity.dart';
-import 'package:whishing/core/themes/colors.dart';
 import 'package:whishing/core/themes/textstyles.dart';
 import 'package:whishing/core/widgets/contact_structure.dart';
 import 'package:whishing/core/widgets/states/loading_contact_displayed.dart';

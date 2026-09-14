@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:whishing/core/constants/strings.dart';
 import 'package:whishing/core/data/local/cashed_user_data.dart';
 import 'package:whishing/core/domain/user_entity.dart';
 import 'package:whishing/core/helper/extenstion.dart';
-import 'package:whishing/core/helper/shared_prefrences.dart';
 import 'package:whishing/core/routing/routs.dart';
 import 'package:whishing/core/themes/colors.dart';
 import 'package:whishing/core/themes/textstyles.dart';
@@ -89,6 +87,7 @@ class HomeDrawer extends StatelessWidget {
 
 void logOut(BuildContext context) async {
   await GetUserCashedData.clearUserData();
+  
   context.pushNamedAndRemoveUntil(AppRoutes.login,
       routepredicate: (context) => false);
 }

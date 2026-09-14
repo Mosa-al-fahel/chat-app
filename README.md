@@ -13,6 +13,8 @@ A full-featured, real-time Flutter chat application built with **Clean Architect
 * **User Authentication & Profile:** Secure login/logout flow with user data locally persisted using `shared_preferences`.
 * **Theme Customization:** Support for both **Dark Mode** and **Light Mode**, with the user's preference saved locally.
 * **Responsive UI:** Built with `flutter_screenutil` to ensure pixel-perfect UI across all screen sizes, enriched with `Lottie` animations (animations will be added soos, many other features as well)
+* **real time notifications** built with `flutter_push_local_notifications` and Fcm `firebase_cloud_messaging` service, emites messages notification 
+
 
 ## Architecture & State Management
 
@@ -31,6 +33,9 @@ This project strictly follows the **Clean Architecture** pattern to separate con
 - [Shared Preferences](https://pub.dev/packages/shared_preferences) - Key-value storage for app settings (Theme, User Session).
 - [Flutter ScreenUtil](https://pub.dev/packages/flutter_screenutil) - UI responsiveness.
 - [Get It](https://pub.dev/packages/get_it) - Service locator.
+- [notifications](pub.dev/packages/firebase_messaging) 
+- [local notifications](https://pub.dev/packages/flutter_local_notifications)
+
  
 
  ### Prerequisites

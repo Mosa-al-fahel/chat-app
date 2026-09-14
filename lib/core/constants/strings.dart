@@ -7,4 +7,6 @@ class StringsConstants {
   static const String requiresToken = 'REQUIRESTOKEN';
   static const String themeDark = 'isITDark';
   static const String contactsStorageKey = 'storageContacts';
+  static const String chatChannelId = 'recieving messages-channel';
+  static const String  chatChannelName = '';
 }

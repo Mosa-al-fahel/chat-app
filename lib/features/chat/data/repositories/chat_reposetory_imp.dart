@@ -45,18 +45,10 @@ class ChatReposetorysImp implements ChatRepository {
       List<String> ids = [senderId, receiverId];
       ids.sort();
       String chatKey = 'chat_${ids[0]}_${ids[1]}';
-      hiveLocalServies
-          .cacheSingleMessage(chatKey, messageModel)
-          .catchError((error) {
-        print(error);
-      });
-
+      hiveLocalServies.cacheSingleMessage(chatKey, messageModel);
       return messageModel.toEntity();
     });
   }
-
-  @override
-  Stream<bool> get typingStream => socketService.typingStream;
 
   @override
   Future<ApiResult<void>> sendMessage(
@@ -76,11 +68,15 @@ class ChatReposetorysImp implements ChatRepository {
   }
 
   @override
+  Stream<bool> get typingStream => socketService.typingStream;
+
+  @override
   Future<ApiResult<void>> sendTypingState(
       {required String reciverId,
       required String senderId,
       required bool typing}) async {
     try {
+      
       socketService.emitTyping(reciverId, senderId, typing);
       return ApiResult.success(null);
     } catch (error) {

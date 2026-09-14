@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:whishing/core/data/local/cashed_user_data.dart';
 import 'package:whishing/core/error_handler/error_model.dart';
+import 'package:whishing/core/services/notifications/local_notifications.dart';
 import 'package:whishing/features/chat/domain/enitities/message_entity.dart';
 import 'package:whishing/features/chat/domain/usecases/get_messages.dart';
 import 'package:whishing/features/chat/domain/usecases/listen_to_messages.dart';
@@ -46,6 +47,7 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   Future<void> initChat(String receiverId) async {
+    PushlocalNotifications.currentsSender = receiverId;
     emit(ChatLoading());
     _messageSubscription =
         listenToMessagesUseCase.listenToMessages().listen((messageEntity) {
@@ -60,7 +62,7 @@ class ChatCubit extends Cubit<ChatState> {
       }
     });
     final response = await getMessagesUseCase.call(_userId, receiverId);
-    switch (response) {
+    switch (response)  {
       case ApiSuccess(data: var messages):
         List<MessageEntity> allMessages = [...messages, ..._temporaryMessages];
         _temporaryMessages.clear();
@@ -133,6 +135,7 @@ class ChatCubit extends Cubit<ChatState> {
     _messageSubscription?.cancel();
     _typingTrackingSubscription?.cancel();
     messageContent.dispose();
+    PushlocalNotifications.currentsSender = null;
     return super.close();
   }
 }

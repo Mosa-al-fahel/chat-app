@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "411152561119",
+    "project_id": "chat-app-490c2",
+    "storage_bucket": "chat-app-490c2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411152561119:android:6e847680867aea1d614a6a",
+        "android_client_info": {
+          "package_name": "com.example.whishing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmjPR0FjUj1B3EViYJQQd9NKyrnhLm_yQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

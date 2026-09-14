@@ -4,6 +4,7 @@ import 'package:whishing/core/data/local/cashed_user_data.dart';
 import 'package:whishing/core/domain/user_entity.dart';
 import 'package:whishing/core/error_handler/error_model.dart';
 import 'package:whishing/features/home/domain/usercases/home_usecases.dart';
+import 'package:whishing/features/notifications/domain/usecase/notifications_use_case.dart';
 
 part 'home_page_state.dart';
 
@@ -14,10 +15,11 @@ class HomePageCubit extends Cubit<HomePageStates> {
   TextEditingController searchController = TextEditingController();
   TextEditingController serachForExpController = TextEditingController();
   GlobalKey<FormState> fomrkeyExp = GlobalKey<FormState>();
+  final NotificationsUseCase notificationsUsecase;
 
   GlobalKey<FormState> fomrkey = GlobalKey<FormState>();
   static final UserEntity _userData = GetUserCashedData.userCashedData;
-  HomePageCubit(this.usesCases) : super(HomePageStates());
+  HomePageCubit(this.usesCases,this.notificationsUsecase) : super(HomePageStates());
   Future<void> initHomePage() async {
     exploreFriends();
     disPlayContants();
@@ -63,6 +65,7 @@ class HomePageCubit extends Cubit<HomePageStates> {
             contactsState: PageStates.failure, contantsError: error));
     }
   }
+  
 
   void resetAddingState() {
     emit(state.copyWith(addFreindState: PageStates.intial));

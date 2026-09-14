@@ -39,5 +39,16 @@ class UserModel extends UserEntity {
             username: username,lastMessage: lastMessage,lastMessageTime: lastMessageTime);
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
+      UserEntity toEntity() {
+    return UserEntity(
+      id: id,
+      username: username,
+      avatar: avatar,
+      email: email,
+      lastMessage: lastMessage,
+      friends: friends,
+      lastMessageTime: lastMessageTime
+    );
+  }
   //Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }

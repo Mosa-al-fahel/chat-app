@@ -11,9 +11,9 @@ class ApiUrls {
   static const String firendsList = '${friends}list';
   static const String removeFriend = '${friends}remove';
   static const String requests = '${friends}requests';
-   static const String acceptRequests = '${friends}acceptrequest';
- 
+  static const String acceptRequests = '${friends}acceptrequest';
   //messages and char feature
-
   static const String chatMessages = 'messages/';
+  // token of notifications
+  static const String fcmToken = 'fcm-token';
 }

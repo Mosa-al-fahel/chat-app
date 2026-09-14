@@ -21,9 +21,10 @@ class HomeHead extends StatelessWidget {
                 size: 34.r,
                 color: Theme.of(context).colorScheme.tertiary,
               ),
-              onPressed: () {
+              onPressed: ()  {
                 Scaffold.of(context).openDrawer();
                 cubit.initDrawer();
+               
               }),
           horizontalSpacing(2),
           Expanded(
