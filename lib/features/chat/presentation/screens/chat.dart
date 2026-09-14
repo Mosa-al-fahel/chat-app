@@ -9,6 +9,8 @@ import 'package:whishing/features/chat/presentation/widgets/states_builder/chat_
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key, required this.userData});
   final UserEntity userData;
+ 
+  //i am useing avatar and name only 
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class ChatScreen extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: AppbaraBlocBuilder(
-              userName: userData.username!, userAvatar: userData.avatar!),
+              userName: userData.username!, userAvatar: userData.avatar?? ""),
         ),
         body: Form(
           key: cubit.key,

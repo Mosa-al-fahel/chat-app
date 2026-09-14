@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:whishing/core/data/local/hive_local_services.dart';
 import 'package:whishing/core/data/model/user_model.dart';
 import 'package:whishing/core/network/network.dart';
+import 'package:whishing/core/services/notifications/firebase/fcm_firebase.dart';
 import 'package:whishing/features/chat/data/model/message_model.dart';
 import 'package:whishing/features/chat/data/repositories/chat_reposetory_imp.dart';
 import 'package:whishing/features/chat/data/sources/remote/chat_remote_data_source.dart';
@@ -29,6 +30,9 @@ import 'package:whishing/features/auth/signup/data/repositories/sign_up.dart';
 import 'package:whishing/features/auth/signup/data/sources/sign_up_remote_data.dart';
 import 'package:whishing/features/auth/signup/domain/usecases/sign_up.dart';
 import 'package:whishing/features/auth/signup/presentation/cubit/sign_up_cubit.dart';
+import 'package:whishing/features/notifications/data/repository/notifications_repo_imp.dart';
+import 'package:whishing/features/notifications/data/sources/fcm_remote_data_source.dart';
+import 'package:whishing/features/notifications/domain/usecase/notifications_use_case.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -40,7 +44,8 @@ void configureDependencies() {
       () => SignUpRepositoryImp(getIt<SignUpRemoteData>()));
   getIt.registerLazySingleton<SignUpUseCase>(
       () => SignUpUseCase(getIt<SignUpRepositoryImp>()));
-  getIt.registerFactory<SignUpCubit>(() => SignUpCubit(getIt<SignUpUseCase>()));
+  getIt.registerFactory<SignUpCubit>(() => SignUpCubit(getIt<SignUpUseCase>(),
+      notificationsUseCase: getIt<NotificationsUseCase>()));
   //login
   getIt.registerLazySingleton<LoginRemoteData>(() => LoginRemoteData(dio));
   getIt.registerLazySingleton<LoginRepositoryImp>(
@@ -57,8 +62,8 @@ void configureDependencies() {
       getIt<HomeRemoteData>(), getIt<HiveLocalServices<UserModel>>()));
   getIt.registerLazySingleton<HomeUseCases>(
       () => HomeUseCases(getIt<HomeRepoImp>()));
-  getIt.registerFactory<HomePageCubit>(
-      () => HomePageCubit(getIt<HomeUseCases>()));
+  getIt.registerFactory<HomePageCubit>(() =>
+      HomePageCubit(getIt<HomeUseCases>(), getIt<NotificationsUseCase>()));
   // requests
   getIt.registerLazySingleton<RequestsRemoteDataSources>(
       () => RequestsRemoteDataSources(dio));
@@ -91,10 +96,20 @@ void configureDependencies() {
   getIt.registerLazySingleton<ListenToMessagesUseCase>(
       () => ListenToMessagesUseCase(getIt<ChatReposetorysImp>()));
   getIt.registerFactory<ChatCubit>(() => ChatCubit(
-
+    
       sendMessageUseCase: getIt<SendMessageUseCase>(),
       getMessagesUseCase: getIt<GetMessagesUseCase>(),
       listenToMessagesUseCase: getIt<ListenToMessagesUseCase>(),
       sendTypingStateUseCase: getIt<SendTypingStateUseCase>(),
       trackingTypingUseCase: getIt<ListenToTypingUseCase>()));
+  //notificatinos services
+
+  getIt.registerLazySingleton<SyncFcmTokenRemoteDataSource>(
+      () => SyncFcmTokenRemoteDataSource(dio));
+  getIt.registerLazySingleton<FBFcmServices>(() => FBFcmServices());
+
+  getIt.registerLazySingleton<NotificationsRepoImp>(() => NotificationsRepoImp(
+      getIt<SyncFcmTokenRemoteDataSource>(), getIt<FBFcmServices>()));
+  getIt.registerLazySingleton<NotificationsUseCase>(
+      () => NotificationsUseCase(getIt<NotificationsRepoImp>()));
 }

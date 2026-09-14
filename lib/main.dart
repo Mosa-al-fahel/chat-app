@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_ce_flutter/adapters.dart';
 import 'package:whishing/core/data/local/cashed_user_data.dart';
@@ -9,25 +10,34 @@ import 'package:whishing/core/routing/myrouting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whishing/core/routing/routs.dart';
+import 'package:whishing/core/services/notifications/local_notifications.dart';
+import 'package:whishing/core/services/notifications/notifications_clicks_navigation.dart';
 import 'package:whishing/core/themes/theme.dart';
 import 'package:whishing/features/chat/data/model/message_model.dart';
+import 'package:whishing/features/notifications/domain/usecase/notifications_use_case.dart';
+import 'package:whishing/core/services/notifications/firebase/firebase_options.dart';
 import 'package:whishing/themes_cubit/theme_cubit.dart';
-void main() async {
+  void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  NotificationNavigationService.init();
   await SharedPreference.initializeSharedPerefrnce();
   configureDependencies();
   await GetUserCashedData.initUser();
   await isTokenValidate();
   await Hive.initFlutter();
+   PushlocalNotifications.initForegroundNotifications( );
   Hive.registerAdapter(UserModelAdapter());
   Hive.registerAdapter(MessageModelAdapter());
-  connectSocket();
+  connectSocketAndRefreshToken();
   runApp(BlocProvider(
     create: (context) => ThemeCubit(GetUserCashedData.isItDark),
     child: MyApp(rout: MyRouting()),
   ));
 }
-
 class MyApp extends StatelessWidget {
   final MyRouting rout;
   const MyApp({super.key, required this.rout});
@@ -39,6 +49,7 @@ class MyApp extends StatelessWidget {
         child: BlocBuilder<ThemeCubit, ThemeMode>(
           builder: (context, theme) {
             return MaterialApp(
+              navigatorKey: NotificationNavigationService.navigatorKey,
               theme: lightTheme,
               darkTheme: darkTheme,
               themeMode: theme,
@@ -52,11 +63,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-String? _id = GetUserCashedData.userId;
 bool _userToken = false;
-void connectSocket() {
-  if (_id != null && _id!.isNotEmpty) {
-    ConnectToSocket.connectSocket(_id);
+void connectSocketAndRefreshToken() {
+  String? currentUserId = GetUserCashedData.userId;
+  if (currentUserId != null && currentUserId.isNotEmpty) {
+    ConnectToSocket.connectSocket(currentUserId);
+    getIt<NotificationsUseCase>().listenToRefreshToken(currentUserId);
   } else {}
 }
 

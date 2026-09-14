@@ -32,7 +32,9 @@ PreferredSizeWidget customBar(
 }
 
 Widget _displayUserPicture({String? userPicture}) {
-  if (userPicture == "https://placeholder-avatar.png" || userPicture == null) {
+  if (userPicture == "https://placeholder-avatar.png" ||
+      userPicture == "" ||
+      userPicture == null) {
     return CircleAvatar(
       maxRadius: 32.r,
       backgroundColor: AppColors.lightestGrey,
