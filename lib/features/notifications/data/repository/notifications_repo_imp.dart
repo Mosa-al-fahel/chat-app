@@ -35,8 +35,7 @@ class NotificationsRepoImp extends NotificationsRepository {
   }
 
   @override
-  Future<void> hamdleNotificationsClicks() {
-    // TODO: implement hamdleNotificationsClicks
-    throw UnimplementedError();
+  Future<void> clearFcmToken() async {
+    await fcmServices.clearToken();
   }
 }

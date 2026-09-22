@@ -31,13 +31,13 @@ class SignUpCubit extends Cubit<SignUpState> {
         userName.clear();
         email.clear();
         password.clear();
-        final String id = data.id!;
-        await notificationsUseCase.sendFcmToken(userId: id);
+        final String? id = data.id;
         ConnectToSocket.connectSocket(id);
+
+        await notificationsUseCase.sendFcmToken(userId: id);
         emit(SignUpSuccess());
       case ApiFailure(error: var error):
-        print('');
-        emit(SignUpFailure(error));
+         emit(SignUpFailure(error));
     }
   }
 

@@ -17,8 +17,8 @@ import 'package:whishing/features/chat/data/model/message_model.dart';
 import 'package:whishing/features/notifications/domain/usecase/notifications_use_case.dart';
 import 'package:whishing/core/services/notifications/firebase/firebase_options.dart';
 import 'package:whishing/themes_cubit/theme_cubit.dart';
-  void main() async {
 
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -29,15 +29,16 @@ import 'package:whishing/themes_cubit/theme_cubit.dart';
   await GetUserCashedData.initUser();
   await isTokenValidate();
   await Hive.initFlutter();
-   PushlocalNotifications.initForegroundNotifications( );
+  PushlocalNotifications.initForegroundNotifications();
+  connectSocketAndRefreshToken();
   Hive.registerAdapter(UserModelAdapter());
   Hive.registerAdapter(MessageModelAdapter());
-  connectSocketAndRefreshToken();
   runApp(BlocProvider(
     create: (context) => ThemeCubit(GetUserCashedData.isItDark),
     child: MyApp(rout: MyRouting()),
   ));
 }
+
 class MyApp extends StatelessWidget {
   final MyRouting rout;
   const MyApp({super.key, required this.rout});
@@ -67,6 +68,7 @@ bool _userToken = false;
 void connectSocketAndRefreshToken() {
   String? currentUserId = GetUserCashedData.userId;
   if (currentUserId != null && currentUserId.isNotEmpty) {
+    print(currentUserId);
     ConnectToSocket.connectSocket(currentUserId);
     getIt<NotificationsUseCase>().listenToRefreshToken(currentUserId);
   } else {}

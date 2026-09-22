@@ -26,19 +26,23 @@ class NotificationsUseCase {
       }
     });
   }
- void initForegroundNotifications() {
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    RemoteNotification? notification = message.notification;
 
-    if (notification != null) {
-      PushlocalNotifications.showNotification(
-        id: message.hashCode,
-        title: notification.title ?? 'message recieved ',
-        body: notification.body ?? '',
-        payload: message
-            .data['senderId'], 
-      );
-    }
-  });
-}
+  void initForegroundNotifications() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+
+      if (notification != null) {
+        PushlocalNotifications.showNotification(
+          id: message.hashCode,
+          title: notification.title ?? 'message recieved ',
+          body: notification.body ?? '',
+          payload: message.data['senderId'],
+        );
+      }
+    });
+  }
+
+  Future<void>clearFcmToken() async {
+    await repo.clearFcmToken();
+  }
 }

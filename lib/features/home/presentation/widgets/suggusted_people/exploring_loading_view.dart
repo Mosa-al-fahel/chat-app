@@ -32,10 +32,9 @@ Widget _loadingShow(BuildContext context) => SizedBox(
           padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             customizeContainerOnLoading(
-                borderradius: 200, height: 100, width: 80, context: context),
+                borderradius: 400, height: 100, width: 80, context: context),
             SizedBox(height: 6.h),
             customizeContainerOnLoading(
                 borderradius: 100, height: 20, width: 55, context: context),
           ])),
     );
-

@@ -7,6 +7,7 @@ import 'package:whishing/core/helper/extenstion.dart';
 import 'package:whishing/core/routing/routs.dart';
 import 'package:whishing/core/themes/colors.dart';
 import 'package:whishing/core/themes/textstyles.dart';
+import 'package:whishing/features/home/presentation/cubit/home_page_cubit.dart';
 import 'package:whishing/features/home/presentation/widgets/drawer/drawer_bloc_builder.dart';
 import 'package:whishing/themes_cubit/theme_cubit.dart';
 
@@ -87,7 +88,8 @@ class HomeDrawer extends StatelessWidget {
 
 void logOut(BuildContext context) async {
   await GetUserCashedData.clearUserData();
-  
+  await context.read<HomePageCubit>().clearFcmToken();
+
   context.pushNamedAndRemoveUntil(AppRoutes.login,
       routepredicate: (context) => false);
 }

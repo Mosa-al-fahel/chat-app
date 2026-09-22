@@ -19,7 +19,8 @@ class HomePageCubit extends Cubit<HomePageStates> {
 
   GlobalKey<FormState> fomrkey = GlobalKey<FormState>();
   static final UserEntity _userData = GetUserCashedData.userCashedData;
-  HomePageCubit(this.usesCases,this.notificationsUsecase) : super(HomePageStates());
+  HomePageCubit(this.usesCases, this.notificationsUsecase)
+      : super(HomePageStates());
   Future<void> initHomePage() async {
     exploreFriends();
     disPlayContants();
@@ -65,7 +66,6 @@ class HomePageCubit extends Cubit<HomePageStates> {
             contactsState: PageStates.failure, contantsError: error));
     }
   }
-  
 
   void resetAddingState() {
     emit(state.copyWith(addFreindState: PageStates.intial));
@@ -138,6 +138,8 @@ class HomePageCubit extends Cubit<HomePageStates> {
         .where((contact) => contact.username!.contains(requiredContact))
         .toList();
   }
+
+  Future<void>clearFcmToken() async{await  notificationsUsecase.clearFcmToken();}
 
   @override
   Future<void> close() {

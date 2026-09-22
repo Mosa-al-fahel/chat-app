@@ -5,5 +5,5 @@ abstract class NotificationsRepository {
       {required String userId, required String fcmToken});
   Future<String?> getFcmToken();
   Stream<String> get syncFcmToken;
-  Future<void>hamdleNotificationsClicks();
+  Future<void>clearFcmToken();
 }
