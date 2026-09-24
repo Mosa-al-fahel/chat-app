@@ -26,6 +26,7 @@ jobs:
         with:
           ruby-version: '3.4.10' 
           bundler-cache: true    
+          working-directory: android
 
       - name: Get dependencies
         run: |
@@ -37,4 +38,4 @@ jobs:
         env:
           CLI_TOKEN: ${{ secrets.CLI_TOKEN }}
           APP_ID: ${{ secrets.APP_ID }}
-        run: bundle exec fastlane Distribute_Firebase
+        run: bundle exec fastlane distribute
