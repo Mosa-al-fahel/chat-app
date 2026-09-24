@@ -1,0 +1,39 @@
+name: Flutter CI/CD
+
+on:
+  push:
+    branches: [ main, feature/CI-CD ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  distribute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: bancolombia/flutter-setup-action@v1
+        with:
+          channel: 'stable'
+          flutter-version: 'latest'
+          java-version: '17'
+          cache: 'true'
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4.10' 
+          bundler-cache: true    
+
+      - name: Get dependencies
+        run: |
+          flutter clean
+          flutter pub get
+  
+      - name: Run Fastlane
+        env:
+          CLI_TOKEN: ${{ secrets.CLI_TOKEN }}
+          APP_ID: ${{ secrets.APP_ID }}
+        run: bundle exec fastlane Distribute_Firebase
