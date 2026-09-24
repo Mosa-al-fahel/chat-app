@@ -32,7 +32,6 @@ void main() async {
   PushlocalNotifications.initForegroundNotifications();
   connectSocketAndRefreshToken();
   Hive.registerAdapter(UserModelAdapter());
-  print('hello');
   Hive.registerAdapter(MessageModelAdapter());
   runApp(BlocProvider(
     create: (context) => ThemeCubit(GetUserCashedData.isItDark),
