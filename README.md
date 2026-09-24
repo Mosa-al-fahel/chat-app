@@ -23,6 +23,8 @@ This project strictly follows the **Clean Architecture** pattern to separate con
 * **Dependency Injection:** `get_it`
 * **API Networking:** `dio` paired with `retrofit` for structured and type-safe HTTP requests to the Node.js API.
 * **Data Parsing:** `json_serializable` and `json_annotation`.
+* **CI/CD** To distribute apk to testers/clients.. using `FASTLANE` and `Firebase app distribution`
+
 
 ## Tech Stack & Dependencies
 
