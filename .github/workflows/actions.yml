@@ -33,6 +33,7 @@ jobs:
           flutter pub get
   
       - name: Run Fastlane
+        working-directory: android
         env:
           CLI_TOKEN: ${{ secrets.CLI_TOKEN }}
           APP_ID: ${{ secrets.APP_ID }}
