@@ -42,6 +42,8 @@ setUp(() {
       final result = await usecase.callFriends();
       // verification
       expect(result, ApiResult.success(testContactsList));
+      verify(() => mockHomeRepository.displayFirends()).called(1);
+
     });
      test(
         'should return list of suggustions successfully when repository call succeeds',
@@ -66,6 +68,7 @@ setUp(() {
       final result = await usecase.call();
       // verification
       expect(result, ApiResult.success(testSuggustionsList));
+      verify(() => mockHomeRepository.explorePeople()).called(1);
     });
   });
   
