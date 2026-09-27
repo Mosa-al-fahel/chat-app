@@ -3,12 +3,16 @@ import 'package:json_annotation/json_annotation.dart';
 part 'error_model.g.dart';
 
 @JsonSerializable()
-class ErrorModel {
-  String? message;
-  bool? status;
-  ErrorModel({this.message, this.status});
+class ErrorModel extends Equatable{
+ final String? message;
+  final bool? status;
+  const ErrorModel({this.message, this.status});
   factory ErrorModel.fromJson(Map<String, dynamic> json) =>
       _$ErrorModelFromJson(json);
+
+  @override
+  List<Object?> get props => [message,status];
+      
 }
 
 sealed class ApiResult<T> extends Equatable {

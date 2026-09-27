@@ -12,13 +12,12 @@ class MockHomeRepository extends Mock implements HomeRepository {}
 void main() {
   late HomeUseCases usecase;
   late MockHomeRepository mockHomeRepository;
-setUp(() {
+  setUp(() {
     mockHomeRepository = MockHomeRepository();
     usecase = HomeUseCases(mockHomeRepository);
   });
 
-    group('test home screen usecases', () {
- 
+  group('test home screen usecases', () {
     test(
         'should return list of contacts successfully when repository call succeeds',
         () async {
@@ -43,9 +42,8 @@ setUp(() {
       // verification
       expect(result, ApiResult.success(testContactsList));
       verify(() => mockHomeRepository.displayFirends()).called(1);
-
     });
-     test(
+    test(
         'should return list of suggustions successfully when repository call succeeds',
         () async {
       // arrange
@@ -71,5 +69,17 @@ setUp(() {
       verify(() => mockHomeRepository.explorePeople()).called(1);
     });
   });
-  
+  test('should return api failed in case request failed', () async {
+    // arrange
+    ErrorModel testFailureReponse =
+        ErrorModel(message: 'failed, no internet connection', status: false);
+    when(() => mockHomeRepository.explorePeople())
+        .thenAnswer((_) async => ApiResult<List<UserEntity>>.failed(testFailureReponse));
+    //action
+
+    final result = await usecase.call();
+    // verification
+    expect(result, ApiResult<List<UserEntity>>.failed(testFailureReponse));
+    verify(() => mockHomeRepository.explorePeople()).called(1);
+  });
 }
