@@ -30,6 +30,9 @@ jobs:
         run: |
           flutter clean
           flutter pub get
+          
+      - name: run flutter unit tests
+        run: flutter test
   
       - name: Run Fastlane
         working-directory: android
