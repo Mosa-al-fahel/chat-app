@@ -63,7 +63,7 @@ void configureDependencies() {
   getIt.registerLazySingleton<HomeUseCases>(
       () => HomeUseCases(getIt<HomeRepoImp>()));
   getIt.registerFactory<HomePageCubit>(() =>
-      HomePageCubit(getIt<HomeUseCases>(), getIt<NotificationsUseCase>()));
+      HomePageCubit(getIt<HomeUseCases>(), notificationsUsecase:  getIt<NotificationsUseCase>()));
   // requests
   getIt.registerLazySingleton<RequestsRemoteDataSources>(
       () => RequestsRemoteDataSources(dio));

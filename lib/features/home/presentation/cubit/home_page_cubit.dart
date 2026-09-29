@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:whishing/core/data/local/cashed_user_data.dart';
 import 'package:whishing/core/domain/user_entity.dart';
@@ -15,11 +16,11 @@ class HomePageCubit extends Cubit<HomePageStates> {
   TextEditingController searchController = TextEditingController();
   TextEditingController serachForExpController = TextEditingController();
   GlobalKey<FormState> fomrkeyExp = GlobalKey<FormState>();
-  final NotificationsUseCase notificationsUsecase;
+  final NotificationsUseCase? notificationsUsecase;
 
   GlobalKey<FormState> fomrkey = GlobalKey<FormState>();
   static final UserEntity _userData = GetUserCashedData.userCashedData;
-  HomePageCubit(this.usesCases, this.notificationsUsecase)
+  HomePageCubit(this.usesCases, {this.notificationsUsecase})
       : super(HomePageStates());
   Future<void> initHomePage() async {
     exploreFriends();
@@ -139,12 +140,18 @@ class HomePageCubit extends Cubit<HomePageStates> {
         .toList();
   }
 
-  Future<void>clearFcmToken() async{await  notificationsUsecase.clearFcmToken();}
+  Future<void> clearFcmToken() async {
+    await notificationsUsecase!.clearFcmToken();
+  }
 
   @override
   Future<void> close() {
-    searchController.clear();
+ try{   searchController.clear();
     searchController.dispose();
+    serachForExpController.dispose();}
+    catch (_) {
+    // تجاهل الخطأ إذا تم عمل dispose له مسبقاً
+  }
     return super.close();
   }
 }

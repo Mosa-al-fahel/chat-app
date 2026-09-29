@@ -1,8 +1,8 @@
 part of 'home_page_cubit.dart';
 
-enum PageStates { intial, loading, success, empty, failure , emptySearch}
+enum PageStates { intial, loading, success, empty, failure, emptySearch }
 
-class HomePageStates {
+class HomePageStates extends Equatable {
   final PageStates contactsState;
   final PageStates suggestedState;
   final PageStates addFreindState;
@@ -43,4 +43,17 @@ class HomePageStates {
         suggustedList: suggustedList ?? this.suggustedList,
         profileData: profileData ?? this.profileData);
   }
+
+  @override
+  List<Object?> get props => [
+        contactsList,
+        contactsState,
+        contantsError,
+        suggestedState,
+        suggustedList,
+        suggustedError,
+        profileData,
+        addindContactError,
+        addFreindState
+      ];
 }
