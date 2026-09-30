@@ -84,7 +84,7 @@ class HomePageCubit extends Cubit<HomePageStates> {
 
       case ApiFailure(error: var error):
         emit(state.copyWith(
-            addFreindState: PageStates.failure, contantsError: error));
+            addFreindState: PageStates.failure, addindContactError: error));
     }
   }
 

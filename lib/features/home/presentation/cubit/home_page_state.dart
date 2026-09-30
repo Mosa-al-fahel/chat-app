@@ -12,7 +12,7 @@ class HomePageStates extends Equatable {
   final List<UserEntity> contactsList;
   final List<UserEntity> suggustedList;
   final ErrorModel? addindContactError;
-  HomePageStates(
+  const HomePageStates(
       {this.contactsState = PageStates.intial,
       this.suggestedState = PageStates.intial,
       this.addFreindState = PageStates.intial,

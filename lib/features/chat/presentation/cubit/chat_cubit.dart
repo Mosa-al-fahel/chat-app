@@ -19,9 +19,11 @@ class ChatCubit extends Cubit<ChatState> {
       required this.sendMessageUseCase,
       required this.getMessagesUseCase,
       required this.listenToMessagesUseCase,
-      required this.sendTypingStateUseCase})
+      required this.sendTypingStateUseCase,
+      required this.userId,
+      })
       : super(ChatInitial());
-  final String _userId = GetUserCashedData.userId!;
+  final String userId;
   final SendMessageUseCase sendMessageUseCase;
   final GetMessagesUseCase getMessagesUseCase;
   final ListenToMessagesUseCase listenToMessagesUseCase;
@@ -35,7 +37,7 @@ class ChatCubit extends Cubit<ChatState> {
   StreamSubscription<bool>? _typingTrackingSubscription;
   Timer? _timer;
   bool _istypingNow = false;
-  String get userIdForChat => _userId;
+  String get userIdForChat =>  userId;
 
   GlobalKey<FormState> key = GlobalKey<FormState>();
   void scrollToLowest() {
@@ -61,8 +63,8 @@ class ChatCubit extends Cubit<ChatState> {
         _temporaryMessages.add(messageEntity);
       }
     });
-    final response = await getMessagesUseCase.call(_userId, receiverId);
-    switch (response)  {
+    final response = await getMessagesUseCase.call( userId, receiverId);
+    switch (response) {
       case ApiSuccess(data: var messages):
         List<MessageEntity> allMessages = [...messages, ..._temporaryMessages];
         _temporaryMessages.clear();
@@ -94,7 +96,7 @@ class ChatCubit extends Cubit<ChatState> {
     if (typingStatus && !_istypingNow) {
       _istypingNow = true;
       final response = await sendTypingStateUseCase.call(
-          reciverId: receiverId, typing: true, senderId: _userId);
+          reciverId: receiverId, typing: true, senderId:  userId);
       switch (response) {
         case ApiSuccess():
           break;
@@ -105,7 +107,7 @@ class ChatCubit extends Cubit<ChatState> {
     Timer(const Duration(milliseconds: 1600), () async {
       _istypingNow = false;
       final response = await sendTypingStateUseCase.call(
-          reciverId: receiverId, typing: false, senderId: _userId);
+          reciverId: receiverId, typing: false, senderId:  userId);
 
       switch (response) {
         case ApiSuccess():
@@ -117,7 +119,7 @@ class ChatCubit extends Cubit<ChatState> {
 
   Future<void> sendMessage(String receiverId) async {
     MessageEntity aText = MessageEntity(
-        text: messageContent.text, receiverId: receiverId, senderId: _userId);
+        text: messageContent.text, receiverId: receiverId, senderId:  userId);
     final response = await sendMessageUseCase.call(messageContent: aText);
 
     switch (response) {
