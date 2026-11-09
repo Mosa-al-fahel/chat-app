@@ -8,7 +8,7 @@ jobs:
   distribute:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout codebranch
         uses: actions/checkout@v4
 
       - name: Setup Flutter
@@ -30,6 +30,9 @@ jobs:
         run: |
           flutter clean
           flutter pub get
+          
+      - name: run flutter unit tests
+        run: flutter test
   
       - name: Run Fastlane
         working-directory: android

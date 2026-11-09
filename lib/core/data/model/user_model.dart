@@ -30,7 +30,7 @@ class UserModel extends UserEntity {
    @HiveField(6)
   final DateTime ?lastMessageTime;
 
-  UserModel({this.username, this.email, this.avatar, this.friends, this.id,this.lastMessage,this.lastMessageTime})
+  const UserModel({this.username, this.email, this.avatar, this.friends, this.id,this.lastMessage,this.lastMessageTime})
       : super(
             id: id,
             avatar: avatar,

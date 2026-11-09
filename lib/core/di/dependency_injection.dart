@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:whishing/core/data/local/cashed_user_data.dart';
 import 'package:whishing/core/data/local/hive_local_services.dart';
 import 'package:whishing/core/data/model/user_model.dart';
 import 'package:whishing/core/network/network.dart';
@@ -63,7 +64,7 @@ void configureDependencies() {
   getIt.registerLazySingleton<HomeUseCases>(
       () => HomeUseCases(getIt<HomeRepoImp>()));
   getIt.registerFactory<HomePageCubit>(() =>
-      HomePageCubit(getIt<HomeUseCases>(), getIt<NotificationsUseCase>()));
+      HomePageCubit(getIt<HomeUseCases>(), notificationsUsecase:  getIt<NotificationsUseCase>()));
   // requests
   getIt.registerLazySingleton<RequestsRemoteDataSources>(
       () => RequestsRemoteDataSources(dio));
@@ -96,6 +97,7 @@ void configureDependencies() {
   getIt.registerLazySingleton<ListenToMessagesUseCase>(
       () => ListenToMessagesUseCase(getIt<ChatReposetorysImp>()));
   getIt.registerFactory<ChatCubit>(() => ChatCubit(
+   userId:   GetUserCashedData.userId ?? "",
     
       sendMessageUseCase: getIt<SendMessageUseCase>(),
       getMessagesUseCase: getIt<GetMessagesUseCase>(),
